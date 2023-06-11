@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
    <head>
-      <title>Checkout Status</title>
+      <title>PayByLink Status</title>
    </head>
    <body>
       <?php
@@ -10,6 +10,15 @@
          $Id = $_GET["id"];
          
          $responseData = request($checkoutId, $Id);
+         
+         // Function to format the JSON string in a stylish format
+         function formatJson($jsonString) {
+             $decodedJson = json_decode($jsonString, true);
+             if ($decodedJson === null) {
+                 return $jsonString; // Invalid JSON, return as is
+             }
+             return json_encode($decodedJson, JSON_PRETTY_PRINT);
+         }
          
          
          
@@ -58,9 +67,7 @@
          ?>
       <h1>Transaction Response</h1>
       <div>
-         <textarea name="" id="txt_result" cols="100" rows="30"  
-         <pre>
-         <?php echo $responseData; ?> </textarea>
+         <textarea name="" id="txt_result" cols="100" rows="30"><?php echo formatJson($responseData); ?></textarea>
       </div>
       <br><br>
       <div class="field">
